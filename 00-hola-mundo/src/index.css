@@ -1,0 +1,75 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: #222;
+    font-family: system-ui;
+    display: grid;
+    place-content: center;
+    min-height: 100vh;
+
+    .card-twitter {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        width: 314px;
+    }
+
+    .header-card {
+        display: flex;
+        gap: 10px;
+    }
+
+    .header-card img {
+        width: 40px;
+        border-radius: 50%;
+        /*background-color: aliceblue;*/
+    }
+
+    .card-content {
+        display: flex;
+        flex-direction: column;
+        color: white;
+    }
+
+    .card-content span {
+        color: #a9a9a9;
+    }
+
+    .aside-card {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .button-card {
+        border: none;
+        padding: 5px 10px;
+        border-radius: 12px;
+        font-weight: bold;
+        cursor: pointer;
+        width: 120px;
+    }
+
+
+
+    .isFollowingUser {
+        background: rgba(167, 245, 160, 0.99);
+    }
+
+    .isFollowingUser:hover{
+        background: rgba(255, 25, 57, 0.64);
+    }
+
+    .isFollowingUser:hover .text-card{
+       display: none;
+    }
+
+    .isFollowingUser:hover .button-card-hover {
+        display: block;
+    }
+
+    .button-card-hover {
+        display: none;
+    }
+}
