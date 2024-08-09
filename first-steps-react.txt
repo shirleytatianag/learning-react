@@ -1,0 +1,39 @@
+* Crear proyecto con VITE
+npm i standard -D      
+npm créate vite@latest
+
+* Si no deseas configurar/inicializar directamente con react JS. (Punto de entrada)
+  1. Selecciona Vanilla.
+  2. Ingresas al proyecto creado.
+  3. Instalas las librerías de React.
+	3.1. npm install @vitejs/plugin-react -E
+	3.2. npm install react -E
+	3.3. npm install react-dom -E
+  4. Se crea la configuración de vite
+	4.1. Crea archivo llamado: "vite.config.js"
+	4.2. Se digita lo siguiente: 
+	import { defineConfig } from "vite"
+	import react from '@vitejs/plugin-react'
+		
+	export dafult defineConfig({
+		plugins: [react()]
+	})
+   5. Se ajusta el main.js (que es el punto de entrada de nuestra app)
+	import { createRoot } from 'react-dom'
+
+	const root = createRoot(document.getElementById('app'))
+	root.render(<h1>Hello, world!s</h1>)
+	
+	Nota: Se debe cambiarle la extensión a JSX y en el index.html se debe cambiar la extensión del archivo del punto de entrada. (/main.js ===> /main.jsx)
+
+   6. Instalar Linter y estándar
+	6.1.1 npm i standard -D, en el package.json, realizar la siguiente configuración: 
+"eslintConfig":{
+	"extends": "./node_modules/standard/eslintrc.json"
+}
+
+7. En el main.js:
+const root = createRoot(document.getElementById('app'))
+root.render(
+  <App/>
+)
