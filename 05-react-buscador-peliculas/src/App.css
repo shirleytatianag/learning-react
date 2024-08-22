@@ -1,0 +1,23 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+main{
+    display: flex;
+    justify-content: center;
+}
+
+form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-search{
+    flex: 1 auto;
+}
+
+
