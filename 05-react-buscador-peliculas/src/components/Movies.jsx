@@ -2,12 +2,12 @@ import PropTypes from 'prop-types';
 
 function ListOfMovies({ movies }) {
     return (
-        <ul>
+        <ul className='movies'>
             {movies.map(movie => (
-                <li key={movie.id}>
+                <li className='movie' key={movie.id}>
                     <h3>{movie.title}</h3>
                     <p>{movie.year}</p>
-                    <img src={movie.poster} alt={`Poster de la película ${movie.Title}`} />
+                    <img src={movie.poster} alt={`Postesr de la película ${movie.Title}`} />
                 </li>
             ))}
         </ul>
@@ -32,8 +32,6 @@ function NoMoviesResults() {
 }
 
 export function Movies( {movies} ) {
-    console.log(movies);
-
     const hasMovies = movies.length > 0;
 
     return(
