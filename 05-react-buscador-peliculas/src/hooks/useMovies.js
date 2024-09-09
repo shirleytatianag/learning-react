@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo, useEffect, useCallback} from 'react';
 import { searchMovies } from '../services/movies';
 
 export function useMovies({ search, sort }) {
@@ -7,39 +7,41 @@ export function useMovies({ search, sort }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null)
   const previousSearch = useRef(search);
+  const [mappedM, setMappedM] = useState([])
 
-  const getMovies = async () => {
-    console.log(search === previousSearch.current);
-    
-    if (search === previousSearch.current) return
-    try {
-      setLoading(true)
-      setError(null)
-      if (search) {
-        previousSearch.current = search
-        const data = await searchMovies({search})
-        setResponseMovies(data)
+  const getMovies = useCallback(
+     async ({search}) => {
+      if (search === previousSearch.current) return
+      try {
+        setLoading(true)
+        setError(null)
+        if (search) {
+          previousSearch.current = search
+          const data = await searchMovies({search})
+          setResponseMovies(data)
+        }
+      } catch (error) {
+        setError(error.message)
+      } finally {
+        setLoading(false)
       }
-    } catch (error) {
-      setError(error.message)
-    } finally {
-      setLoading(false)
-    }
-       
-  };
-  
-  const movies = responseMovies?.Search || [];
+  }, [])
 
-  const mappedMovies = movies.map((movie) => ({
-    id: movie.imdbID,
-    title: movie.Title,
-    year: movie.Year,
-    poster: movie.Poster,
-  }));
+  useEffect(()=>{
+    const movies = responseMovies?.Search || [];
 
-  // const sortedMovies = useMemo(()=>{
-  //   sort ? [ ...mappedMovies.sort((a, b) => a.title.localeCompare(b.title))] : mappedMovies
-  // }, [sort, responseMovies])
+    const mappedMovies = movies.map((movie) => ({
+      id: movie.imdbID,
+      title: movie.Title,
+      year: movie.Year,
+      poster: movie.Poster,
+    }));
+    setMappedM(mappedMovies)
+  }, [responseMovies])
 
-  return { movies: mappedMovies, getMovies, loading, error };
+  const sortedMovies = useMemo(()=>{
+    return sort ? [ ...mappedM].sort((a, b) => a.title.localeCompare(b.title)) : mappedM
+  }, [sort, mappedM ])
+
+  return { movies: sortedMovies || [], getMovies, loading, error };
 }

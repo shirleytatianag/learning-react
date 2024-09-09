@@ -49,3 +49,5 @@ Movies.propTypes = {
         })
     ).isRequired,
 };
+
+// use callback para funciones

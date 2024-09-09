@@ -1,7 +1,8 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import './App.css'
 import { Movies } from './components/Movies'
 import { useMovies } from './hooks/useMovies' 
+import debounce from "just-debounce-it";
 
 
 function useSearch () {
@@ -9,7 +10,6 @@ function useSearch () {
   const [search, updateSearch] = useState('')
   const [error, setError] = useState(null)
   const isFirstInput = useRef(true)
-  console.log(isFirstInput);
   
   useEffect(()=>{
     if(isFirstInput.current){
@@ -28,7 +28,7 @@ function useSearch () {
     }
 
     if (search.length < 3){
-      setError('La busqueda debe tener al menos 3 palabaras')
+      setError('La busqueda debe tener al menos 3 carácteres')
       return
     }
   
@@ -44,9 +44,16 @@ function App() {
   const { search, updateSearch, error } = useSearch()
   const { movies, loading, getMovies } = useMovies({search, sort})
 
+  const debouncedGetMovies = useCallback( 
+    debounce(search => {
+      console.log('search' + search);
+      getMovies({search})
+    }, 300)
+    , [getMovies])
+
   const handleSubmit = (event)=>{
     event.preventDefault()
-    getMovies()
+    getMovies({search})
   }
 
   const handleSort = () => {
@@ -57,6 +64,7 @@ function App() {
   const handleChange = (event) => {
     const newQuery = event.target.value
     updateSearch(newQuery)
+    debouncedGetMovies(newQuery)
   }
 
   return (
