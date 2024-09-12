@@ -1,4 +1,4 @@
-* Crear proyecto con VITE
+npm i st* Crear proyecto con VITE
 npm i standard -D      
 npm créate vite@latest
 
